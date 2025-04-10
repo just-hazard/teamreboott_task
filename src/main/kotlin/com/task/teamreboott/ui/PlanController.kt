@@ -3,6 +3,7 @@ package com.task.teamreboott.ui
 import com.task.teamreboott.application.PlanService
 import com.task.teamreboott.dto.CreatePlanRequest
 import com.task.teamreboott.dto.CreatePlanResponse
+import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
@@ -16,7 +17,7 @@ class PlanController(
     private val service: PlanService
 ) {
     @PostMapping
-    fun createPlan(@RequestBody request: CreatePlanRequest): ResponseEntity<CreatePlanResponse> {
+    fun createPlan(@RequestBody @Valid request: CreatePlanRequest): ResponseEntity<CreatePlanResponse> {
         val response = service.createPlan(request)
         return ResponseEntity.status(HttpStatus.CREATED).body(response)
     }

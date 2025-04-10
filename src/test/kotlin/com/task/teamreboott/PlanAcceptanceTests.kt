@@ -13,6 +13,7 @@ import io.restassured.module.kotlin.extensions.Extract
 import io.restassured.module.kotlin.extensions.Given
 import io.restassured.module.kotlin.extensions.Then
 import io.restassured.module.kotlin.extensions.When
+import org.hamcrest.CoreMatchers.containsString
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
@@ -78,6 +79,27 @@ class PlanAcceptanceTests : AcceptanceTest() {
         assertEquals(3000, response.features[0].maxCustomUnitPerUse)
         assertEquals(null, response.features[0].maxCustomUsagePerMonth)
         assertEquals(20, response.features[0].customCreditCost)
+    }
+
+    @Test
+    fun `요금제 생성 시 유효하지 않는 파라미터`() {
+        val request = CreatePlanRequest(
+            name = "",
+            features = listOf(
+                FeatureLimitRequest(0, 3000, null, 20),
+            )
+        )
+
+        val response = Given {
+            body(request)
+            contentType(MediaType.APPLICATION_JSON_VALUE)
+        } When {
+            post("/api/plans")
+        } Then {
+            statusCode(HttpStatus.BAD_REQUEST.value())
+            body(containsString("요금제 이름은 필수입니다."))
+            body(containsString("기능 PK 값은 0보다 커야 합니다."))
+        }
     }
 
     @Test
