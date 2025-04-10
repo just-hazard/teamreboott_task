@@ -16,8 +16,8 @@ data class CreatePlanRequest(
 }
 
 data class FeatureLimitRequest(
-    @field:NotNull(message = "기능 PK 값은 필수입니다.")
-    @field:Positive(message = "기능 PK 값은 0보다 커야 합니다.")
+    @field:NotNull(message = "기능 ID 값은 필수입니다.")
+    @field:Positive(message = "기능 ID는 0보다 커야 합니다.")
     val featureId: Long,
     val maxUnitPerUse: Int?,
     val maxUsagePerMonth: Int?,

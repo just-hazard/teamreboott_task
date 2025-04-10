@@ -25,32 +25,6 @@ import kotlin.test.assertEquals
 
 @DisplayName("요금제 기능")
 class PlanAcceptanceTests : AcceptanceTest() {
-
-    @Autowired
-    lateinit var featureRepository: FeatureRepository
-    @Autowired
-    lateinit var companyRepository: CompanyRepository
-
-    @BeforeEach
-    fun setUp() {
-        companyRepository.saveAll(
-            listOf(
-                Company("A사", 5000),
-                Company("B사", 10000),
-                Company("C사", 10000)
-            )
-        )
-
-        featureRepository.saveAll(
-            listOf(
-                Feature("AI 번역", 2000, 10, FeatureLimitType.TEXT),
-                Feature("AI 교정", 1000, 10, FeatureLimitType.TEXT),
-                Feature("AI 뉘앙스 조절", 1500, 20, FeatureLimitType.TEXT),
-                Feature("AI 초안 작성", 200, 50, FeatureLimitType.MONTH)
-            )
-        )
-    }
-
     @Test
     fun `요금제 생성`() {
         val request = CreatePlanRequest(
@@ -90,7 +64,7 @@ class PlanAcceptanceTests : AcceptanceTest() {
             )
         )
 
-        val response = Given {
+        Given {
             body(request)
             contentType(MediaType.APPLICATION_JSON_VALUE)
         } When {
@@ -98,7 +72,7 @@ class PlanAcceptanceTests : AcceptanceTest() {
         } Then {
             statusCode(HttpStatus.BAD_REQUEST.value())
             body(containsString("요금제 이름은 필수입니다."))
-            body(containsString("기능 PK 값은 0보다 커야 합니다."))
+            body(containsString("기능 ID는 0보다 커야 합니다."))
         }
     }
 

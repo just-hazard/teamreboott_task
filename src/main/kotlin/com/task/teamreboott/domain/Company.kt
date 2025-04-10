@@ -13,6 +13,10 @@ class Company(
     @JoinColumn(name = "plan_id")
     var plan: Plan? = null
 ) : BaseEntity() {
+    fun addPlan(plan: Plan) {
+        this.plan = plan
+    }
+
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0
 }
