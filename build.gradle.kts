@@ -37,9 +37,9 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation ("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation ("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     runtimeOnly("com.mysql:mysql-connector-j")
-//    implementation("org.flywaydb:flyway-core")
 
     testRuntimeOnly("com.h2database:h2")
 
