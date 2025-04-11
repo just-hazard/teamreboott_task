@@ -1,23 +1,12 @@
 spring:
   datasource:
-    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;MODE=MySQL;LOCK_TIMEOUT=10000
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
+    url: jdbc:mysql://localhost:3306/team-reboott?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
+    username: user
+    password: 1234
   jpa:
     hibernate:
-      ddl-auto: create-drop
-#    defer-datasource-initialization: true
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-
-logging:
-  level:
-    org:
-      hibernate:
-        SQL: DEBUG
-        orm:
-          jdbc:
-            bind: TRACE
+      ddl-auto: update
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always
