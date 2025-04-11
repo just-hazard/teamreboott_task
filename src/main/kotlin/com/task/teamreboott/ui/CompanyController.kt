@@ -33,7 +33,7 @@ class CompanyController(
         ApiResponse(responseCode = "400", description = "잘못된 파라미터 요청", content = [Content()]),
         ApiResponse(responseCode = "404", description = "존재하지 않는 요금제 조회 요청 / 존재하지 않는 회사 조회 요청", content = [Content(mediaType = "application/json", schema = Schema(implementation = ErrorResponse::class))])
     ])
-    @PostMapping("/{id}/plan")
+    @PutMapping("/{id}/plan")
     fun assignPlanToCompany(
         @Positive(message = "회사 ID는 0보다 커야 합니다.")
         @PathVariable id: Long,

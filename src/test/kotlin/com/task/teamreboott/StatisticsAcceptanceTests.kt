@@ -58,7 +58,7 @@ class StatisticsAcceptanceTests : AcceptanceTest() {
             body(AssignPlanRequest(planAId))
             contentType(MediaType.APPLICATION_JSON_VALUE)
         } When {
-            post("/api/companies/{id}/plan", 1L)
+            put("/api/companies/{id}/plan", 1L)
         }
 
 
@@ -80,7 +80,7 @@ class StatisticsAcceptanceTests : AcceptanceTest() {
             body(AssignPlanRequest(planBId))
             contentType(MediaType.APPLICATION_JSON_VALUE)
         } When {
-            post("/api/companies/{id}/plan", 1L)
+            put("/api/companies/{id}/plan", 1L)
         }
 
         Given {

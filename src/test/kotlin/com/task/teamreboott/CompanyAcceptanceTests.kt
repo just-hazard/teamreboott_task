@@ -61,7 +61,7 @@ class CompanyAcceptanceTests : AcceptanceTest() {
             body(AssignPlanRequest(planAId))
             contentType(MediaType.APPLICATION_JSON_VALUE)
         } When {
-            post("/api/companies/{id}/plan", 1L)
+            put("/api/companies/{id}/plan", 1L)
         } Then {
             statusCode(HttpStatus.OK.value())
         } Extract {
@@ -80,14 +80,14 @@ class CompanyAcceptanceTests : AcceptanceTest() {
             body(AssignPlanRequest(planAId))
             contentType(MediaType.APPLICATION_JSON_VALUE)
         } When {
-            post("/api/companies/{id}/plan", 1L)
+            put("/api/companies/{id}/plan", 1L)
         }
 
         val response = Given {
             body(AssignPlanRequest(planBId))
             contentType(MediaType.APPLICATION_JSON_VALUE)
         } When {
-            post("/api/companies/{id}/plan", 1L)
+            put("/api/companies/{id}/plan", 1L)
         } Then {
             statusCode(HttpStatus.OK.value())
         } Extract {
@@ -106,7 +106,7 @@ class CompanyAcceptanceTests : AcceptanceTest() {
             body(AssignPlanRequest(1L))
             contentType(MediaType.APPLICATION_JSON_VALUE)
         } When {
-            post("/api/companies/{id}/plan", 0)
+            put("/api/companies/{id}/plan", 0)
         } Then {
             statusCode(HttpStatus.BAD_REQUEST.value())
             body(CoreMatchers.containsString("회사 ID는 0보다 커야 합니다."))
@@ -116,7 +116,7 @@ class CompanyAcceptanceTests : AcceptanceTest() {
             body(AssignPlanRequest(0))
             contentType(MediaType.APPLICATION_JSON_VALUE)
         } When {
-            post("/api/companies/{id}/plan", 1L)
+            put("/api/companies/{id}/plan", 1L)
         } Then {
             statusCode(HttpStatus.BAD_REQUEST.value())
             body(CoreMatchers.containsString("요금제 ID는 0보다 커야 합니다."))
@@ -129,7 +129,7 @@ class CompanyAcceptanceTests : AcceptanceTest() {
             body(AssignPlanRequest(1L))
             contentType(MediaType.APPLICATION_JSON_VALUE)
         } When {
-            post("/api/companies/{id}/plan", 10)
+            put("/api/companies/{id}/plan", 10)
         } Then {
             statusCode(HttpStatus.NOT_FOUND.value())
             body("message", CoreMatchers.equalTo(ErrorMessage.NOT_FOUND_COMPANY))
@@ -139,7 +139,7 @@ class CompanyAcceptanceTests : AcceptanceTest() {
             body(AssignPlanRequest(10L))
             contentType(MediaType.APPLICATION_JSON_VALUE)
         } When {
-            post("/api/companies/{id}/plan", 1L)
+            put("/api/companies/{id}/plan", 1L)
         } Then {
             statusCode(HttpStatus.NOT_FOUND.value())
             body("message", CoreMatchers.equalTo(ErrorMessage.NOT_FOUND_PLAN))

@@ -61,7 +61,7 @@ class FeatureUsageAcceptanceTests : AcceptanceTest() {
             body(AssignPlanRequest(planAId))
             contentType(MediaType.APPLICATION_JSON_VALUE)
         } When {
-            post("/api/companies/{id}/plan", 1L)
+            put("/api/companies/{id}/plan", 1L)
         }
 
         Given {
@@ -82,7 +82,7 @@ class FeatureUsageAcceptanceTests : AcceptanceTest() {
             body(AssignPlanRequest(planBId))
             contentType(MediaType.APPLICATION_JSON_VALUE)
         } When {
-            post("/api/companies/{id}/plan", 1L)
+            put("/api/companies/{id}/plan", 1L)
         }
 
         Given {
@@ -137,7 +137,7 @@ class FeatureUsageAcceptanceTests : AcceptanceTest() {
             body(AssignPlanRequest(planBId))
             contentType(MediaType.APPLICATION_JSON_VALUE)
         } When {
-            post("/api/companies/{id}/plan", 1L)
+            put("/api/companies/{id}/plan", 1L)
         }
 
         // 요금제에 사용할 기능이 없을 시
