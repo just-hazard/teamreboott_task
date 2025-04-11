@@ -1,10 +1,10 @@
 package com.task.teamreboott.domain
 
+import com.task.teamreboott.common.ErrorMessage
 import com.task.teamreboott.domain.common.BaseEntity
 import com.task.teamreboott.domain.enums.FeatureLimitType
-import com.task.teamreboott.dto.FeatureLimitRequest
+import com.task.teamreboott.exception.ExceedUsageLimitException
 import jakarta.persistence.*
-import kotlin.math.max
 
 @Entity
 class PlanFeature(
@@ -22,6 +22,18 @@ class PlanFeature(
 
     val customCreditCost: Int = 0
 ) : BaseEntity() {
+    fun confirmUsagePerMonth(monthUsageCount: Int) {
+        if(monthUsageCount > maxCustomUsagePerMonth!!) {
+            throw ExceedUsageLimitException(ErrorMessage.EXCEED_UNIT_PER_USE)
+        }
+    }
+
+    fun confirmUnitPerUse(usageUnit: Int) {
+        if(usageUnit > maxCustomUnitPerUse!!) {
+            throw ExceedUsageLimitException(ErrorMessage.EXCEED_USAGE_PER_MONTH)
+        }
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0

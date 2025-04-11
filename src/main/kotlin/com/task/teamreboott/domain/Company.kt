@@ -1,6 +1,8 @@
 package com.task.teamreboott.domain
 
+import com.task.teamreboott.common.ErrorMessage
 import com.task.teamreboott.domain.common.BaseEntity
+import com.task.teamreboott.exception.InsufficientCreditException
 import jakarta.persistence.*
 
 @Entity
@@ -18,5 +20,15 @@ class Company(
     }
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long = 0
+    var id: Long = 0
+
+    fun checkPaymentAvailability(customCreditCost: Int) {
+        if(credit < customCreditCost) {
+            throw InsufficientCreditException(ErrorMessage.INSUFFICIENT_CREDIT)
+        }
+    }
+
+    fun deductCredit(customCreditCost: Int) {
+        credit -= customCreditCost
+    }
 }

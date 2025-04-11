@@ -15,7 +15,7 @@ class FeatureUsage(
 
     val usageUnit: Int = 0,
 
-    val deductedCredit: Int = 0
+    val usedCredit: Int = 0
 ) : BaseEntity() {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

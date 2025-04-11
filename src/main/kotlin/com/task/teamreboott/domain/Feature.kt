@@ -43,4 +43,8 @@ class Feature(
     fun checkCustomCreditCost(creditPerUse: Int?): Int {
         return creditPerUse ?: creditCost
     }
+
+    fun confirmSameType(type: FeatureLimitType): Boolean {
+        return this.type == type
+    }
 }

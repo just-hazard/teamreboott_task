@@ -1,6 +1,6 @@
 package com.task.teamreboott.common
 
-import com.task.teamreboott.exception.NotExistFeatureException
+import com.task.teamreboott.exception.*
 import jakarta.persistence.EntityNotFoundException
 import jakarta.validation.ConstraintViolationException
 import org.springframework.http.HttpStatus
@@ -21,6 +21,30 @@ class GlobalExceptionHandler {
     fun handleEntityNotFoundException(e: EntityNotFoundException): ResponseEntity<ErrorResponse> {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
             .body(ErrorResponse(HttpStatus.NOT_FOUND.name, e.message ?: ErrorMessage.NOT_FOUND_ENTITY))
+    }
+
+    @ExceptionHandler(NotMappingPlanException::class)
+    fun handleNotMappingPlanException(e: NotMappingPlanException): ResponseEntity<ErrorResponse> {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+            .body(ErrorResponse(HttpStatus.NOT_FOUND.name, ErrorMessage.COMPANY_IS_NOT_MAPPING_PLAN))
+    }
+
+    @ExceptionHandler(NotIncludedFeatureException::class)
+    fun handleNotIncludedFeatureException(e: NotIncludedFeatureException): ResponseEntity<ErrorResponse> {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+            .body(ErrorResponse(HttpStatus.NOT_FOUND.name, ErrorMessage.NOT_INCLUDED_FEATURE))
+    }
+
+    @ExceptionHandler(InsufficientCreditException::class)
+    fun handleInsufficientCreditException(e: InsufficientCreditException): ResponseEntity<ErrorResponse> {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+            .body(ErrorResponse(HttpStatus.NOT_FOUND.name, ErrorMessage.INSUFFICIENT_CREDIT))
+    }
+
+    @ExceptionHandler(ExceedUsageLimitException::class)
+    fun handleExceedUsageLimitException(e: ExceedUsageLimitException): ResponseEntity<ErrorResponse> {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+            .body(ErrorResponse(HttpStatus.NOT_FOUND.name, e.message ?: "사용량 한도 초과"))
     }
 
     @ExceptionHandler(MethodArgumentNotValidException::class)

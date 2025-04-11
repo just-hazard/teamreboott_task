@@ -14,7 +14,7 @@ class Plan(
 ) : BaseEntity() {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long = 0
+    var id: Long = 0
 
     fun addFeatures(requestFeatures: Map<Long, FeatureLimitRequest>, features: MutableList<Feature>) {
         this.planFeatures.validateAndAddFeature(requestFeatures, features)

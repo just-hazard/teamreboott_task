@@ -3,6 +3,7 @@ package com.task.teamreboott.domain
 import com.task.teamreboott.common.ErrorMessage
 import com.task.teamreboott.dto.FeatureLimitRequest
 import com.task.teamreboott.exception.NotExistFeatureException
+import com.task.teamreboott.exception.NotIncludedFeatureException
 import jakarta.persistence.CascadeType
 import jakarta.persistence.Embeddable
 import jakarta.persistence.OneToMany
@@ -16,6 +17,12 @@ class PlanFeatures(
         this.planFeatures.forEach {
             it.plan = plan
         }
+    }
+
+    fun findSameFeature(featureId: Long): PlanFeature {
+        return planFeatures.find {
+            it.feature.id == featureId
+        } ?: throw NotIncludedFeatureException(ErrorMessage.NOT_INCLUDED_FEATURE)
     }
 
     fun validateAndAddFeature(

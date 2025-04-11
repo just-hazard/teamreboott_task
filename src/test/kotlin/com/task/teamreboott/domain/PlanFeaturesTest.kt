@@ -1,8 +1,10 @@
 package com.task.teamreboott.domain
 
+import com.task.teamreboott.common.ErrorMessage
 import com.task.teamreboott.domain.enums.FeatureLimitType
 import com.task.teamreboott.dto.FeatureLimitRequest
 import com.task.teamreboott.exception.NotExistFeatureException
+import com.task.teamreboott.exception.NotIncludedFeatureException
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.collections.shouldHaveSize
@@ -76,6 +78,35 @@ internal class PlanFeaturesTest : BehaviorSpec({
                 shouldThrow<NotExistFeatureException> {
                     planFeatures.validateAndAddFeature(requestMap, mutableListOf(feature1, feature2))
                 }
+            }
+        }
+    }
+
+    given("여러 PlanFeature를 가진 PlanFeatures가 있을 때") {
+        // 가상의 Feature 및 PlanFeature 생성
+        val feature1 = Feature(name = "기능1").apply { this.id = 1L }
+        val feature2 = Feature(name = "기능2").apply { this.id = 2L }
+
+        val planFeature1 = PlanFeature(feature = feature1)
+        val planFeature2 = PlanFeature(feature = feature2)
+
+        val planFeatures = PlanFeatures(
+            planFeatures = mutableListOf(planFeature1, planFeature2)
+        )
+
+        `when`("존재하는 featureId로 검색하면") {
+            val result = planFeatures.findSameFeature(1L)
+
+            then("해당 PlanFeature를 반환해야 한다") {
+                result shouldBe planFeature1
+            }
+        }
+
+        `when`("존재하지 않는 featureId로 검색하면") {
+            then("NotIncludedFeatureException 예외가 발생해야 한다") {
+                shouldThrow<NotIncludedFeatureException> {
+                    planFeatures.findSameFeature(999L)
+                }.message shouldBe ErrorMessage.NOT_INCLUDED_FEATURE
             }
         }
     }
