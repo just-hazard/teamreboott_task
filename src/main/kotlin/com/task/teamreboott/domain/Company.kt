@@ -15,12 +15,12 @@ class Company(
     @JoinColumn(name = "plan_id")
     var plan: Plan? = null
 ) : BaseEntity() {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Long = 0
+
     fun addPlan(plan: Plan) {
         this.plan = plan
     }
-
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long = 0
 
     fun checkPaymentAvailability(customCreditCost: Int) {
         if(credit < customCreditCost) {

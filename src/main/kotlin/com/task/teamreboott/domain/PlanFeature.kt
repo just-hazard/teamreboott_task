@@ -22,6 +22,10 @@ class PlanFeature(
 
     val customCreditCost: Int = 0
 ) : BaseEntity() {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Long = 0
+
     fun confirmUsagePerMonth(monthUsageCount: Int) {
         if(monthUsageCount > maxCustomUsagePerMonth!!) {
             throw ExceedUsageLimitException(ErrorMessage.EXCEED_UNIT_PER_USE)
@@ -33,8 +37,4 @@ class PlanFeature(
             throw ExceedUsageLimitException(ErrorMessage.EXCEED_USAGE_PER_MONTH)
         }
     }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long = 0
 }

@@ -37,14 +37,14 @@ class GlobalExceptionHandler {
 
     @ExceptionHandler(InsufficientCreditException::class)
     fun handleInsufficientCreditException(e: InsufficientCreditException): ResponseEntity<ErrorResponse> {
-        return ResponseEntity.status(HttpStatus.CONFLICT)
-            .body(ErrorResponse(HttpStatus.NOT_FOUND.name, ErrorMessage.INSUFFICIENT_CREDIT))
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
+            .body(ErrorResponse(HttpStatus.UNPROCESSABLE_ENTITY.name, ErrorMessage.INSUFFICIENT_CREDIT))
     }
 
     @ExceptionHandler(ExceedUsageLimitException::class)
     fun handleExceedUsageLimitException(e: ExceedUsageLimitException): ResponseEntity<ErrorResponse> {
-        return ResponseEntity.status(HttpStatus.CONFLICT)
-            .body(ErrorResponse(HttpStatus.NOT_FOUND.name, e.message ?: "사용량 한도 초과"))
+        return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS)
+            .body(ErrorResponse(HttpStatus.TOO_MANY_REQUESTS.name, e.message ?: "사용량 한도 초과"))
     }
 
     @ExceptionHandler(MethodArgumentNotValidException::class)
