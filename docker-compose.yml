@@ -8,6 +8,11 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: 1234
       TZ: 'Asia/Seoul'
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     ports:
       - "3306:3306"
     command:
@@ -29,7 +34,8 @@ services:
       SPRING_DATASOURCE_USERNAME: user
       SPRING_DATASOURCE_PASSWORD: 1234
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     networks:
       - team-reboott-network
 
