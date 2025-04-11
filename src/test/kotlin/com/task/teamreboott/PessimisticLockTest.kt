@@ -28,9 +28,9 @@ class PessimisticLockTest(
         executor.submit {
             runInTransaction {
                 val company = companyRepository.findByIdWithLock(company.id)
+                println("Thread A: 락 획득")
                 company.get().credit -= 10
                 companyRepository.saveAndFlush(company.get())
-                println("Thread A: 락 획득")
                 latch.countDown() // Thread B 시작하게
                 Thread.sleep(3000) // 락을 오래 점유
                 println("Thread A: 커밋")
