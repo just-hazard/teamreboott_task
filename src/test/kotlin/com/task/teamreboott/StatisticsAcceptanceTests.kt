@@ -100,11 +100,11 @@ class StatisticsAcceptanceTests : AcceptanceTest() {
 
     @Test
     fun `통계 조회 기능`() {
-        val response = Given {
-            body(FeatureUsageStatRequest(1, LocalDate.now().minusDays(1), LocalDate.now()))
-            contentType(MediaType.APPLICATION_JSON_VALUE)
-        } When {
-            get("/api/statistics")
+        val fromDate = LocalDate.now().minusDays(1).toString()
+        val toDate = LocalDate.now().toString()
+
+        val response = When {
+            get("/api/statistics?companyId=1&fromDate=$fromDate&toDate=$toDate")
         } Then {
             statusCode(HttpStatus.OK.value())
         } Extract {
@@ -123,11 +123,10 @@ class StatisticsAcceptanceTests : AcceptanceTest() {
 
     @Test
     fun `통계 조회 시 유효하지 않는 파라미터`() {
-        Given {
-            body(FeatureUsageStatRequest(1, LocalDate.now().plusDays(1), LocalDate.now().plusDays(1)))
-            contentType(MediaType.APPLICATION_JSON_VALUE)
-        } When {
-            get("/api/statistics")
+        val invalidDate = LocalDate.now().plusDays(1).toString()
+
+        When {
+            get("/api/statistics?companyId=1&fromDate=$invalidDate&toDate=$invalidDate")
         } Then {
             statusCode(HttpStatus.BAD_REQUEST.value())
             body(CoreMatchers.containsString("현재 날짜보다 과거여야합니다"))
